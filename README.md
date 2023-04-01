@@ -4,7 +4,7 @@ deploy locally:
 
 1) clone repo
 ```commandline
-git clone repo_name
+git clone https://github.com/phantom-profile/activities_manage_service.git
 ```
 
 2) install requirements
