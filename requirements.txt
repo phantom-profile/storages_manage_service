@@ -1,0 +1,5 @@
+python-dotenv==1.0.0
+pydantic
+yoyo-migrations
+flask==2.2.3
+pypika
