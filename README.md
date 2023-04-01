@@ -17,8 +17,9 @@ python -m pip install -r requirements.txt
 ```commandline
 python migrate.py
 ```
-
+te
 4) run application
 ```commandline
 flask --app app/main run --debug
 ```
+
