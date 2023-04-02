@@ -32,3 +32,8 @@ python migrate.py
 ```commandline
 flask --app app/main run --debug
 ```
+
+#### To run tests
+```commandline
+python -m unittest
+```
