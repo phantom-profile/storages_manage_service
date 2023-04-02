@@ -23,4 +23,5 @@ def migrate():
     print('reloading sql schema completed!')
 
 
-migrate()
+if __name__ == '__main__':
+    migrate()

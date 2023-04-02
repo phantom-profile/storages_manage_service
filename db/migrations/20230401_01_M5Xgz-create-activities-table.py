@@ -1,5 +1,5 @@
 """
-Create Activities database
+Create Activities table
 """
 
 from yoyo import step
