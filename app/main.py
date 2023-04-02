@@ -1,5 +1,9 @@
-from flask import Flask
+from sqlite3 import Connection
 
+from flask import Flask
+from config import DB_PATH
+
+db = Connection(DB_PATH).cursor()
 app = Flask(__name__)
 
 
