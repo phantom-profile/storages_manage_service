@@ -1,6 +1,6 @@
-from typing import Protocol
+from typing import Protocol, Iterable
 
-from app.main import db
+from config import DB
 
 
 class AbstractQuery(Protocol):
@@ -10,8 +10,8 @@ class AbstractQuery(Protocol):
 class BaseQuery:
     TABLE = None
 
-    def execute(self) -> list:
-        return list(db.execute(self._build().get_sql()))
+    def execute(self) -> Iterable:
+        return DB.execute(self._build().get_sql())
 
     def _build(self) -> AbstractQuery:
         raise NotImplementedError('build query in subclass')
