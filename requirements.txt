@@ -1,6 +1,6 @@
 python-dotenv==1.0.0
-pydantic
+fastapi
 yoyo-migrations
-flask==2.2.3
+uvicorn[standard]
 pytest
 pypika

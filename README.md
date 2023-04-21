@@ -30,7 +30,7 @@ python migrate.py
 
 4) run application
 ```commandline
-flask --app app/main run --debug
+uvicorn main:app --reload
 ```
 
 #### To run tests

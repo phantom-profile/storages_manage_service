@@ -1,12 +1,8 @@
-from sqlite3 import Connection
+from fastapi import FastAPI
 
-from flask import Flask
-from config import DB_PATH
-
-db = Connection(DB_PATH).cursor()
-app = Flask(__name__)
+app = FastAPI()
 
 
 @app.get('/')
 def main_page():
-    return "<h1>Hello, World!</h1>"
+    return {'hello': 'world'}
