@@ -30,7 +30,7 @@ python migrate.py
 
 4) run application
 ```commandline
-uvicorn main:app --reload
+uvicorn app.main:app --reload
 ```
 
 #### To run tests

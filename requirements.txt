@@ -1,6 +1,7 @@
 python-dotenv==1.0.0
-fastapi
-yoyo-migrations
+fastapi~=0.95.1
+yoyo-migrations~=8.2.0
 uvicorn[standard]
-pytest
-pypika
+pytest~=7.3.1
+pypika~=0.48.9
+pydantic~=1.10.7
