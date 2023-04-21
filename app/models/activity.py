@@ -2,10 +2,13 @@ from pydantic import BaseModel, PositiveInt, NonNegativeInt
 from datetime import datetime
 
 
-class Activity(BaseModel):
-    id: PositiveInt
+class BaseActivity(BaseModel):
     title: str
     start_time: datetime
+
+
+class Activity(BaseActivity):
+    id: PositiveInt
 
 
 class ActivityList(BaseModel):
