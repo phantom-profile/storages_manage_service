@@ -1,12 +1,13 @@
 from pypika import Query, Table, Order
 
-from base_query import BaseQuery
+from app.queries.base_query import BaseQuery
 
 
 class GetActivitiesQuery(BaseQuery):
     TABLE = Table('activities')
 
     def __init__(self, fields: list[str] = None):
+        super().__init__()
         self.fields = fields
 
     def _build(self):
