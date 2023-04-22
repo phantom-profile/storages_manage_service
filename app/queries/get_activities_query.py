@@ -20,7 +20,7 @@ class GetActivitiesQuery(BaseQuery):
         self.filter()
         self.order()
         self.paginate()
-        print(self.raw_query)
+
         return self.raw_query
 
     def filter(self):
