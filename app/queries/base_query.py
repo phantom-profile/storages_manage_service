@@ -20,11 +20,10 @@ class BaseQuery:
     def execute(self):
         try:
             self.__connection.execute(self.query)
-            print(self.query)
-            if not self.__is_select():
-                DB.commit()
-            else:
+            if self.__is_select():
                 self.result = self.__connection.fetchall()
+            else:
+                DB.commit()
         except sqlite3.Error as e:
             self.error_message = str(e)
         finally:
