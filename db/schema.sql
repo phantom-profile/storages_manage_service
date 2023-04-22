@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS "_yoyo_migration" ( migration_hash VARCHAR(64), migra
 CREATE TABLE activities (
         id INTEGER PRIMARY KEY,
         title STRING NOT NULL,
-        start_time DATETIME NOT NULL
+        start_time DATETIME NOT NULL,
+        is_done BOOLEAN NOT NULL DEFAULT FALSE,
+        description TEXT NOT NULL DEFAULT ""
     );
