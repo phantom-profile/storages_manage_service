@@ -15,23 +15,24 @@ class BaseQuery:
         self.__connection = DB.cursor()
         self.__query = None
         self.result = None
-        self.is_successful = None
         self.error_message = ''
 
     def execute(self):
         try:
             self.__connection.execute(self.query)
             print(self.query)
-            if self.__is_insert():
+            if not self.__is_select():
                 DB.commit()
             else:
                 self.result = self.__connection.fetchall()
-            self.is_successful = True
         except sqlite3.Error as e:
-            self.is_successful = False
             self.error_message = str(e)
         finally:
             self.__connection.close()
+
+    @property
+    def is_successful(self) -> bool:
+        return self.error_message == ''
 
     @property
     def query(self) -> str:
@@ -40,8 +41,8 @@ class BaseQuery:
 
         return self.__query
 
-    def __is_insert(self) -> bool:
-        return self.query.startswith('INSERT')
+    def __is_select(self) -> bool:
+        return self.query.startswith('SELECT')
 
     def _build(self) -> AbstractQuery:
         raise NotImplementedError('build query in subclass')
