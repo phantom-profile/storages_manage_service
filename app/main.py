@@ -1,10 +1,14 @@
 from fastapi import FastAPI, Depends, HTTPException
 from pydantic import PositiveInt
 
-from app.models.activity import Activity, ActivityList, BaseActivity, ActivitiesFilter, ActivityWithMessage
-from app.services.get_activities_service import GetActivitiesService, GetActivityService
-from app.services.delete_ativity_service import DeleteActivityService
+from app.models.activity import (
+    Activity, ActivityList, BaseActivity, ActivitiesFilter, ActivityWithMessage, UpdateActivity
+)
+
 from app.services.create_activity_service import CreateActivityService
+from app.services.delete_ativity_service import DeleteActivityService
+from app.services.get_activities_service import GetActivitiesService, GetActivityService
+from app.services.update_activity_service import UpdateActivityService
 
 app = FastAPI()
 
@@ -33,13 +37,21 @@ def get_activity(activity_id: PositiveInt) -> Activity:
 
 @app.post('/activities')
 def create_activity(activity: BaseActivity) -> ActivityWithMessage:
-    new = CreateActivityService(activity=activity).perform()
-    return ActivityWithMessage(activity=new, message='successfully created')
+    service_result = CreateActivityService(activity=activity).perform()
+    return service_result
 
 
-@app.delete('/attributes/{id}')
-def delete_activity(activity_id: PositiveInt) -> ActivityWithMessage:
-    deleted_activity = DeleteActivityService(activity_id=activity_id).perform()
-    if not deleted_activity:
+@app.patch('/activities/{id}')
+def update_activity(activity_id: PositiveInt, activity: UpdateActivity) -> ActivityWithMessage:
+    service_result = UpdateActivityService(activity_id=activity_id, activity=activity).perform()
+    if not service_result:
         raise HTTPException(status_code=404, detail="Activity not found")
-    return ActivityWithMessage(activity=deleted_activity, message='successfully deleted')
+    return service_result
+
+
+@app.delete('/activities/{id}')
+def delete_activity(activity_id: PositiveInt) -> ActivityWithMessage:
+    service_result = DeleteActivityService(activity_id=activity_id).perform()
+    if not service_result:
+        raise HTTPException(status_code=404, detail="Activity not found")
+    return service_result

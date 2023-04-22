@@ -1,4 +1,4 @@
-from pydantic import BaseModel, PositiveInt, NonNegativeInt, Field
+from pydantic import BaseModel, PositiveInt, NonNegativeInt, Field, validator
 from datetime import datetime
 from enum import StrEnum, auto
 
@@ -19,6 +19,19 @@ class Activity(BaseActivity):
     id: PositiveInt
 
 
+class UpdateActivity(BaseModel):
+    title: str | None
+    start_time: datetime | None
+    is_done: bool | None
+    description: str | None
+
+    @validator('title')
+    def prevent_none(cls, title):
+        if title is not None:
+            assert len(title) > 0, 'title must present'
+        return title
+
+
 class ActivityList(BaseModel):
     activities: list[Activity]
     count: NonNegativeInt
@@ -35,4 +48,4 @@ class ActivitiesFilter(BaseModel):
 
 class ActivityWithMessage(BaseModel):
     activity: Activity | BaseActivity
-    message: str = 'info message'
+    message: str = 'success'
