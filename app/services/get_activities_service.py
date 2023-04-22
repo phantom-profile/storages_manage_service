@@ -1,5 +1,5 @@
 from app.queries.get_activities_query import GetActivitiesQuery
-from app.models.activity import Activity
+from app.models.activity import Activity, ActivitiesFilter
 
 
 class GetActivitiesService:
@@ -20,3 +20,16 @@ class GetActivitiesService:
             self.activities.append(Activity(**row))
 
         return self.activities
+
+
+class GetActivityService:
+    def __init__(self, activity_id: int):
+        self.activity_id = activity_id
+
+    def perform(self) -> Activity | None:
+        query = ActivitiesFilter(id=self.activity_id, per_page=1)
+        result = GetActivitiesService(query).perform()
+        if not result:
+            return None
+
+        return result[0]

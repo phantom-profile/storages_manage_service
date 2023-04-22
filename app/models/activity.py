@@ -1,4 +1,4 @@
-from pydantic import BaseModel, PositiveInt, NonNegativeInt
+from pydantic import BaseModel, PositiveInt, NonNegativeInt, Field
 from datetime import datetime
 from enum import StrEnum, auto
 
@@ -9,7 +9,7 @@ class OrderEnum(StrEnum):
 
 
 class BaseActivity(BaseModel):
-    title: str
+    title: str = Field(..., min_length=1)
     start_time: datetime
 
 
@@ -29,3 +29,8 @@ class ActivitiesFilter(BaseModel):
     page: PositiveInt = 1
     per_page: PositiveInt = 50
     sort_by: str | None
+
+
+class ActivityWithMessage(BaseModel):
+    activity: Activity | BaseActivity
+    message: str = 'info message'
