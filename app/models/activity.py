@@ -11,6 +11,8 @@ class OrderEnum(StrEnum):
 class BaseActivity(BaseModel):
     title: str = Field(..., min_length=1)
     start_time: datetime
+    is_done: bool = False
+    description: str = ''
 
 
 class Activity(BaseActivity):
