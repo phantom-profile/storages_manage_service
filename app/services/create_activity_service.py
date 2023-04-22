@@ -1,16 +1,15 @@
-from app.models.activity import BaseActivity, Activity
+from app.models.activity import BaseActivity, ActivityWithMessage
 from app.queries.create_activity_query import CreateActivityQuery
-from app.services.get_activities_service import GetActivityService
 
 
 class CreateActivityService:
     def __init__(self, activity: BaseActivity):
         self.activity = activity
 
-    def perform(self) -> BaseActivity | None:
+    def perform(self) -> ActivityWithMessage:
         creating = CreateActivityQuery(self.activity.dict())
         creating.execute()
         if not creating.is_successful:
-            return None
+            return ActivityWithMessage(activity=self.activity, message=creating.error_message)
 
-        return self.activity
+        return ActivityWithMessage(activity=self.activity)

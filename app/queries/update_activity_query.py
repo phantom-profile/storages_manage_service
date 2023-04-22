@@ -1,4 +1,4 @@
-from pypika import Query, Table
+from pypika import Table
 
 from app.queries.base_query import BaseQuery
 
