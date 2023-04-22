@@ -11,4 +11,6 @@ class CreateActivityQuery(BaseQuery):
         self.params = params
 
     def _build(self):
-        return Query.into(self.TABLE).columns(*self.params.keys()).insert(*self.params.values())
+        return Query\
+            .into(self.TABLE).columns(*self.params.keys())\
+            .insert(*self.params.values())
