@@ -22,18 +22,3 @@ python -m venv .
 venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
-
-3) run migrations
-```commandline
-python migrate.py
-```
-
-4) run application
-```commandline
-uvicorn app.main:app --reload
-```
-
-#### To run tests
-```commandline
-pytest
-```
