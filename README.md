@@ -30,13 +30,23 @@ python -m pip install -r requirements.txt
 py -m pip install -r requirements.txt
 ```
 
-### Команда для запуска интерактивной консоли
+### Использование IPython
+_Все это делается в рамках venv!!_
+1) создание и настройка конфига
+```commandline
+ipython profile create
+open ~/.ipython/profile_default/ipython_config.py
+```
+2) добавление авторелоуда в конфиг
+```python
+c.InteractiveShellApp.extensions = ['autoreload']
+c.InteractiveShellApp.exec_lines = ['%autoreload 2']
+```
+3) запуск консоли
 ```commandline
 python manage.py shell_plus --ipython
-// внутри консоли
-%load_ext autoreload
-%autoreload 2
 ```
+
 ### Основные понятия веб разработки:
 
 **клиент** - в общем смысле, машина, которая делает запросы
