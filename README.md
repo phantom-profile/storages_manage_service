@@ -38,6 +38,7 @@ python manage.py shell_plus --ipython
 %load_ext autoreload
 %autoreload 2
 ```
+
 ### Основные понятия веб разработки:
 
 **клиент** - в общем смысле, машина, которая делает запросы
