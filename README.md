@@ -29,7 +29,11 @@ python -m pip install -r requirements.txt
 установка зависимостей
 py -m pip install -r requirements.txt
 ```
-
+### Django
+```commandline
+# Запуск сервера
+py manage.py runserver
+```
 ### Основные понятия веб разработки:
 
 **клиент** - в общем смысле, машина, которая делает запросы
