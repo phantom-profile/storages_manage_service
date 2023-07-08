@@ -1,4 +1,11 @@
 python-dotenv==1.0.0
 Django
-pytest
 redis
+requests
+
+# utils for console usage
+django-extensions
+ipython
+
+# libraries for testing
+pytest

@@ -29,6 +29,24 @@ python -m pip install -r requirements.txt
 установка зависимостей
 py -m pip install -r requirements.txt
 ```
+
+### Использование IPython
+_Все это делается в рамках venv!!_
+1) создание и настройка конфига
+```commandline
+ipython profile create
+open ~/.ipython/profile_default/ipython_config.py
+```
+2) добавление авторелоуда в конфиг
+```python
+c.InteractiveShellApp.extensions = ['autoreload']
+c.InteractiveShellApp.exec_lines = ['%autoreload 2']
+```
+3) запуск консоли
+```commandline
+python manage.py shell_plus --ipython
+```
+
 ### Django
 ```commandline
 # Запуск сервера
