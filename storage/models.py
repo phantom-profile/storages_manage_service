@@ -1,3 +1,5 @@
+import uuid
+
 from django.utils import timezone
 from django.db import models
 # https://docs.djangoproject.com/en/4.2/ref/validators/ - validators docs
@@ -10,11 +12,18 @@ class Storage(models.Model):
     capacity = models.IntegerField(validators=[MinValueValidator(1)], null=False)
     created_at = models.DateTimeField(default=timezone.now, null=False)
 
+    def __str__(self):
+        return f"{self.name}, {self.location}"
 
-# model Truck
-# truck_id - unique string, uuid models.UUIDField with default call python uuid.uuid4
-# capacity - integer > 0
-# current_storage - 1toM relation with storage. One storage - many trucks. check models.ForeignKey
-# expluatation_start - datetime
-# expluatation_finish - datetime > expluatation_start
-# created_at - datetime, default = timezone.now
+
+class Truck(models.Model):
+    truck_id = models.UUIDField(unique=True, default=uuid.uuid4, blank=False, null=False)
+    capacity = models.IntegerField(validators=[MinValueValidator(1)], blank=False, null=False)
+    current_storage = models.ForeignKey(Storage, on_delete=models.SET_NULL, null=True)
+    exploitation_start = models.DateTimeField(blank=False, null=False)
+    # expluatation_finish - datetime > expluatation_start
+    exploitation_finish = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(default=timezone.now, null=False)
+
+    def __str__(self):
+        return f"{self.truck_id}, {self.exploitation_start}, storage:{self.current_storage}"

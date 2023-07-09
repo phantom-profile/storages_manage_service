@@ -29,7 +29,6 @@ python -m pip install -r requirements.txt
 установка зависимостей
 py -m pip install -r requirements.txt
 ```
-
 ### Использование IPython
 _Все это делается в рамках venv!!_
 1) создание и настройка конфига
@@ -51,6 +50,12 @@ python manage.py shell_plus --ipython
 ```commandline
 # Запуск сервера
 py manage.py runserver
+```
+```commandline
+# Работа с моделями
+Изменение модели (models.py)
+Запуск команды python manage.py makemigrations для создания миграций этих изменений
+Выполнение команды python manage.py migrate для применения этих изменений в базе данных
 ```
 ### Основные понятия веб разработки:
 
