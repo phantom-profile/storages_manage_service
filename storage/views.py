@@ -1,9 +1,26 @@
 from django.shortcuts import render, HttpResponse
 from django.http import HttpRequest
 
+from storage.models import Storage
+
 
 def index(request: HttpRequest):
-    if request.GET.get('error'):
-        return HttpResponse(content='You triggered error. Why??', status=400)
+    storage_list = Storage.objects.order_by('name')
+    context = {
+        'storage_list': storage_list
+    }
+    return render(request, 'storage/index.html', context)
 
-    return HttpResponse(content='Hello, it is root page', status=200)
+
+def detail(request: HttpRequest, storage_id):
+    return HttpResponse("You're looking at storage %s." % storage_id)
+
+
+def results(request: HttpRequest, storage_id):
+    response = "You're looking at the results of storage %s."
+    return HttpResponse(response % storage_id)
+
+
+def vote(request: HttpRequest, storage_id):
+    return HttpResponse("You're voting on storage %s." % storage_id)
+
