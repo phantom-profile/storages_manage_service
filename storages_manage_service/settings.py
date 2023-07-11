@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'storage.apps.StorageConfig',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',

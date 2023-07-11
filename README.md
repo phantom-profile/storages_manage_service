@@ -29,7 +29,6 @@ python -m pip install -r requirements.txt
 установка зависимостей
 py -m pip install -r requirements.txt
 ```
-
 ### Использование IPython
 _Все это делается в рамках venv!!_
 1) создание и настройка конфига
@@ -47,6 +46,17 @@ c.InteractiveShellApp.exec_lines = ['%autoreload 2']
 python manage.py shell_plus --ipython
 ```
 
+### Django
+```commandline
+# Запуск сервера
+py manage.py runserver
+```
+```commandline
+# Работа с моделями
+Изменение модели (models.py)
+Запуск команды python manage.py makemigrations для создания миграций этих изменений
+Выполнение команды python manage.py migrate для применения этих изменений в базе данных
+```
 ### Основные понятия веб разработки:
 
 **клиент** - в общем смысле, машина, которая делает запросы
