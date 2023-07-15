@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Now you are in <B>{{current_storage.name}}</B></h2>
+    {% if truck_list %}
+        <ul>
+        {% for truck in truck_list %}
+            <li>Truck - {{truck.truck_id}}, capacity - {{truck.capacity}}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No trucks are available.</p>
+    {% endif %}
+    <link><a href="/storages/index">Back to storages</a>
+{% endblock %}

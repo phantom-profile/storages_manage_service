@@ -1,11 +1,11 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpRequest
 
-from storage.models import Storage
+from storage.models import Storage, Truck
 
 
 def index(request: HttpRequest):
-    storage_list = Storage.objects.order_by('name')
+    storage_list = Storage.objects.order_by('name').prefetch_related('truck_set')
     context = {
         'storage_list': storage_list
     }
@@ -13,7 +13,13 @@ def index(request: HttpRequest):
 
 
 def detail(request: HttpRequest, storage_id):
-    return HttpResponse("You're looking at storage %s." % storage_id)
+    truck_list = Truck.objects.filter(current_storage=storage_id)
+    current_storage = get_object_or_404(Storage, id=storage_id)
+    context = {
+        'truck_list': truck_list,
+        'current_storage': current_storage
+    }
+    return render(request, 'storage/detail.html', context)
 
 
 def results(request: HttpRequest, storage_id):
