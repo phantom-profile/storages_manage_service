@@ -1,9 +1,11 @@
-{% if storage_list %}
-    <ul>
-    {% for storage in storage_list %}
-        <li><a href="/storages/{{ storage.id }}/detail">{{ storage.name }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No storages are available.</p>
-{% endif %}
+{% extends 'base.html' %} {% block content %}
+    {% if storage_list %}
+        <ul>
+        {% for storage in storage_list %}
+            <li><a href="/storages/{{ storage.id }}/detail">{{ storage.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No storages are available.</p>
+    {% endif %}
+{% endblock content %}
