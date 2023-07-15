@@ -29,14 +29,34 @@ python -m pip install -r requirements.txt
 установка зависимостей
 py -m pip install -r requirements.txt
 ```
-
-### Команда для запуска интерактивной консоли
+### Использование IPython
+_Все это делается в рамках venv!!_
+1) создание и настройка конфига
+```commandline
+ipython profile create
+open ~/.ipython/profile_default/ipython_config.py
+```
+2) добавление авторелоуда в конфиг
+```python
+c.InteractiveShellApp.extensions = ['autoreload']
+c.InteractiveShellApp.exec_lines = ['%autoreload 2']
+```
+3) запуск консоли
 ```commandline
 python manage.py shell_plus --ipython
 
-// внутри консоли
-%load_ext autoreload
-%autoreload 2
+```
+
+### Django
+```commandline
+# Запуск сервера
+py manage.py runserver
+```
+```commandline
+# Работа с моделями
+Изменение модели (models.py)
+Запуск команды python manage.py makemigrations для создания миграций этих изменений
+Выполнение команды python manage.py migrate для применения этих изменений в базе данных
 ```
 
 ### Основные понятия веб разработки:
