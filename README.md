@@ -29,13 +29,33 @@ python -m pip install -r requirements.txt
 установка зависимостей
 py -m pip install -r requirements.txt
 ```
-
-### Команда для запуска интерактивной консоли
+### Использование IPython
+_Все это делается в рамках venv!!_
+1) создание и настройка конфига
+```commandline
+ipython profile create
+open ~/.ipython/profile_default/ipython_config.py
+```
+2) добавление авторелоуда в конфиг
+```python
+c.InteractiveShellApp.extensions = ['autoreload']
+c.InteractiveShellApp.exec_lines = ['%autoreload 2']
+```
+3) запуск консоли
 ```commandline
 python manage.py shell_plus --ipython
-// внутри консоли
-%load_ext autoreload
-%autoreload 2
+```
+
+### Django
+```commandline
+# Запуск сервера
+py manage.py runserver
+```
+```commandline
+# Работа с моделями
+Изменение модели (models.py)
+Запуск команды python manage.py makemigrations для создания миграций этих изменений
+Выполнение команды python manage.py migrate для применения этих изменений в базе данных
 ```
 ### Основные понятия веб разработки:
 
@@ -135,3 +155,21 @@ def show_one_user(params: dict):
 контроллер - view
 вью - template
 ```
+
+### Task for 11.07.2023
+
+1) сделать чтобы на главном экране /storages напротив каждого storage отображалось количество закрепленных за ним грузовиков
+т е
+```
+Storage_name_1 - 2 trucks available
+Storage_name_1 - 0 trucks available
+```
+Грузовики НЕ должны быть частью гипер ссылки
+
+2) при переходе по гиперссылке отображается такая страница
+
+заголовок Storage_name_1
+
+далее список доступных грузовиков на складе
+
+если грузовиков нет, вместо списка должно быть красным написано "No Trucks available"
