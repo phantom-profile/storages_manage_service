@@ -44,6 +44,7 @@ c.InteractiveShellApp.exec_lines = ['%autoreload 2']
 3) запуск консоли
 ```commandline
 python manage.py shell_plus --ipython
+
 ```
 
 ### Django
@@ -57,6 +58,7 @@ py manage.py runserver
 Запуск команды python manage.py makemigrations для создания миграций этих изменений
 Выполнение команды python manage.py migrate для применения этих изменений в базе данных
 ```
+
 ### Основные понятия веб разработки:
 
 **клиент** - в общем смысле, машина, которая делает запросы
