@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
+    <form action="{% url 'all-storages'%}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
     {% if storage_list %}
         <ul>
         {% for storage in storage_list %}
