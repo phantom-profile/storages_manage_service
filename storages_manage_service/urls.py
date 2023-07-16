@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from storages_manage_service.settings import DEBUG
 
 urlpatterns = [
     path('storages/', include('storage.urls')),
     path('admin/', admin.site.urls),
     path('users/', include('users.urls')),
 ]
+
+if DEBUG:
+    urlpatterns += [
+        path("__debug__/", include('debug_toolbar.urls')),
+    ]

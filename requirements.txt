@@ -5,6 +5,7 @@ requests
 
 # utils for console usage
 django-extensions
+django-debug-toolbar
 ipython
 
 # libraries for testing

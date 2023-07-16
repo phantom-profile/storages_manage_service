@@ -44,6 +44,7 @@ c.InteractiveShellApp.exec_lines = ['%autoreload 2']
 3) запуск консоли
 ```commandline
 python manage.py shell_plus --ipython
+
 ```
 
 ### Django
@@ -57,6 +58,7 @@ py manage.py runserver
 Запуск команды python manage.py makemigrations для создания миграций этих изменений
 Выполнение команды python manage.py migrate для применения этих изменений в базе данных
 ```
+
 ### Основные понятия веб разработки:
 
 **клиент** - в общем смысле, машина, которая делает запросы
@@ -155,21 +157,3 @@ def show_one_user(params: dict):
 контроллер - view
 вью - template
 ```
-
-### Task for 11.07.2023
-
-1) сделать чтобы на главном экране /storages напротив каждого storage отображалось количество закрепленных за ним грузовиков
-т е
-```
-Storage_name_1 - 2 trucks available
-Storage_name_1 - 0 trucks available
-```
-Грузовики НЕ должны быть частью гипер ссылки
-
-2) при переходе по гиперссылке отображается такая страница
-
-заголовок Storage_name_1
-
-далее список доступных грузовиков на складе
-
-если грузовиков нет, вместо списка должно быть красным написано "No Trucks available"
