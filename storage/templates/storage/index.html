@@ -3,7 +3,7 @@
     {% if storage_list %}
         <ul>
         {% for storage in storage_list %}
-            <li><a href="/storages/{{ storage.id }}/detail">{{ storage.name }}</a> - {{storage.truck_set.count}} available</li>
+            <li><a href="/storages/{{ storage.id }}/detail">{{ storage.name }}</a> - {{storage.trucks_count}} available</li>
         {% endfor %}
         </ul>
     {% else %}

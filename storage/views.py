@@ -1,11 +1,12 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.http import HttpRequest
+from django.db.models import Count
 
 from storage.models import Storage, Truck
 
 
 def index(request: HttpRequest):
-    storage_list = Storage.objects.order_by('name').prefetch_related('truck_set')
+    storage_list = Storage.objects.order_by('name').annotate(trucks_count=Count('truck'))
     context = {
         'storage_list': storage_list
     }
@@ -20,13 +21,3 @@ def detail(request: HttpRequest, storage_id):
         'current_storage': current_storage
     }
     return render(request, 'storage/detail.html', context)
-
-
-def results(request: HttpRequest, storage_id):
-    response = "You're looking at the results of storage %s."
-    return HttpResponse(response % storage_id)
-
-
-def vote(request: HttpRequest, storage_id):
-    return HttpResponse("You're voting on storage %s." % storage_id)
-
