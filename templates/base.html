@@ -1,7 +1,9 @@
 <html>
   <head>
-    <title>Storages Manage</title>
- 
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'truck_icon.png' %}">
+    {% block title %} <title>Storages Manage</title> {% endblock %}
+
     <!-- CSS only -->
     <link
       rel="stylesheet"
@@ -16,6 +18,16 @@
     </style>
   </head>
   <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="{% static 'truck_icon.png' %}" style="hight: 35px; width: 40px;">Storages Manage Service</a>
+        <ul class="nav ">
+          <li class="nav-item"><a class="nav-link active" href="{% url 'all-storages' %}">Storages</a></li>
+          <li class="nav-item"><a class="nav-link disabled" href="#">Profile</a></li>
+          <li class="nav-item"><a class="nav-link disabled" href="#">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
     {% block content %} {% endblock %}
  
     <!-- JS, Popper.js, and jQuery -->
@@ -34,5 +46,12 @@
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"
     ></script>
+    <footer class="text-center text-lg-start bg-light text-muted" style="position: fixed; width: 100%; bottom: 0;">
+      <p>Project made with Django, SQL, Redis</p>
+      <p>
+        Made by <a href="https://github.com/phantom-profile" target="_blank">phantom-profile</a>
+        and <a href="https://github.com/denisartis" target="_blank">denisartis</a>
+      </p>
+    </footer>
   </body>
 </html>
