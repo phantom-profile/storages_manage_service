@@ -1,28 +1,42 @@
 class GetParamsFilter:
-    __slots__ = ('params',)
+    __slots__ = ('params', 'is_valid')
 
     ORDER_FIELDS = ('name', 'location', 'id', 'trucks_count',)
-    ORDERS = ('asc', 'desc',)
+    ORDERS_MAP = {
+        'asc': '',
+        'desc': '-'
+    }
 
     DEFAULT_FIELD = 'id'
     DEFAULT_ORDER = 'desc'
 
     def __init__(self, params: dict):
-        self.params = params | {
-            'order': params.get('order', self.DEFAULT_ORDER),
-            'sort': params.get('sort', self.DEFAULT_FIELD)
-        }
+        self.params = params
+        self.is_valid = False
 
-    def is_valid(self) -> bool:
-        return self.params['order'] in self.ORDERS and self.params['sort'] in self.ORDER_FIELDS
+        self.__add_defaults()
+        self.__validate()
+        self.__clean()
 
+    @property
     def sort_string(self) -> str:
+        order = self.params['order']
+        return f"{self.ORDERS_MAP[order]}{self.params['sort']}"
 
-    def cleaned(self) -> dict:
+    def __clean(self):
         if self.params['order'] == 'desc':
-            order = '-'
             change_to = 'asc'
         else:
-            order = ''
             change_to = 'desc'
-        return self.params | {'order': order, 'change_to': change_to}
+        self.params = self.params | {'change_to': change_to}
+
+    def __validate(self):
+        correct_order = self.params['order'] in self.ORDERS_MAP.keys()
+        correct_sort = self.params['sort'] in self.ORDER_FIELDS
+        self.is_valid = correct_sort and correct_order
+
+    def __add_defaults(self):
+        self.params = self.params | {
+            'order': self.params.get('order', self.DEFAULT_ORDER),
+            'sort': self.params.get('sort', self.DEFAULT_FIELD)
+        }

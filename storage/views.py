@@ -8,16 +8,13 @@ from lib.filter_storages_params import GetParamsFilter
 
 def index(request: HttpRequest):
     filter_service = GetParamsFilter(request.GET)
-    if not filter_service.is_valid():
+    if not filter_service.is_valid:
         return HttpResponse(content='invalid request params', status=422)
 
-    params = filter_service.cleaned()
-
-    order_string = f"{params['order']}{params['sort']}"
-    storage_list = Storage.objects.annotate(trucks_count=Count('truck')).order_by(order_string)
+    storage_list = Storage.objects.annotate(trucks_count=Count('truck')).order_by(filter_service.sort_string)
     context = {
         'storage_list': storage_list,
-        'change_to': params['change_to'],
+        'change_to': filter_service.params['change_to'],
     }
     return render(request, 'storage/index.html', context)
 
