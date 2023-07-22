@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.http import HttpRequest
 from django.db.models import Count
+from django.utils import timezone
 
 from storage.models import Storage, Truck
 from storage.forms import StorageForm
@@ -27,4 +28,13 @@ def detail(request: HttpRequest, storage_id):
 
 
 def create_storage(request: HttpRequest):
-    return HttpResponse()
+    form = StorageForm(request.POST)
+    if form.is_valid():
+        storage = Storage(
+            location=form.cleaned_data.get("location"),
+            name=form.cleaned_data.get("name"),
+            capacity=form.cleaned_data.get("capacity"),
+            created_at=timezone.now()
+        )
+        storage.save()
+    return redirect(index)
