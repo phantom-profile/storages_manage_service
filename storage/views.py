@@ -3,12 +3,15 @@ from django.http import HttpRequest
 from django.db.models import Count
 
 from storage.models import Storage, Truck
+from lib.filter_storages_params import GetParamsFilter
 
 
 def index(request: HttpRequest):
-    params = filter_params(request.GET)
-    if not params:
+    filter_service = GetParamsFilter(request.GET)
+    if not filter_service.is_valid():
         return HttpResponse(content='invalid request params', status=422)
+
+    params = filter_service.cleaned()
 
     order_string = f"{params['order']}{params['sort']}"
     storage_list = Storage.objects.annotate(trucks_count=Count('truck')).order_by(order_string)
@@ -27,17 +30,3 @@ def detail(request: HttpRequest, storage_id):
         'current_storage': current_storage
     }
     return render(request, 'storage/detail.html', context)
-
-
-def filter_params(params: dict) -> dict:
-    sort = params.get('sort', 'name')
-    order = params.get('order', 'desc')
-    if order not in ('asc', 'desc') or sort not in ('name', 'location', 'id', 'trucks_count'):
-        return {}
-    if order == 'desc':
-        order = '-'
-        change_to = 'asc'
-    else:
-        order = ''
-        change_to = 'desc'
-    return {'order': order, 'change_to': change_to, 'sort': sort}
