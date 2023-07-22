@@ -1,11 +1,26 @@
 {% extends 'base.html' %}
 {% block content %}
     {% if storage_list %}
-        <ul>
-        {% for storage in storage_list %}
-            <li><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a> - {{storage.trucks_count}} trucks available</li>
-        {% endfor %}
-        </ul>
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th><a href="{% url 'all-storages' %}?sort=id&order={{ change_to | urlencode }}">ID</a></th>
+                    <th><a href="{% url 'all-storages' %}?sort=name&order={{ change_to | urlencode }}">Name</a></th>
+                    <th><a href="{% url 'all-storages' %}?sort=location&order={{ change_to | urlencode }}">Location</a></th>
+                    <th><a href="{% url 'all-storages' %}?sort=trucks_count&order={{ change_to | urlencode }}">Available trucks</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for storage in storage_list %}
+                    <tr>
+                        <th>{{storage.id}}</th>
+                        <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
+                        <th>{{storage.location}}</th>
+                        <th> {{storage.trucks_count}}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
         <p>No storages are available.</p>
     {% endif %}
