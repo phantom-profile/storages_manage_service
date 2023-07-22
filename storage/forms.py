@@ -2,10 +2,10 @@ from django import forms
 from storage.models import Storage
 
 
-class UniqueValidator():
+class UniqueValidator:
     def __call__(self, name):
-        if Storage.objects.filter(name=name):
-            raise forms.ValidationError('ошибка')
+        if Storage.objects.filter(name=name).exists():
+            raise forms.ValidationError('error: field name must be unique')
 
 
 class StorageForm(forms.Form):
