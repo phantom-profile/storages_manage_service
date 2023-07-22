@@ -1,13 +1,17 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.http import HttpRequest
+from django.db.models import Count
 
 from storage.models import Storage, Truck
+from storage.forms import StorageForm
 
 
 def index(request: HttpRequest):
-    storage_list = Storage.objects.order_by('name').prefetch_related('truck_set')
+    form = StorageForm()
+    storage_list = Storage.objects.order_by('name').annotate(trucks_count=Count('truck'))
     context = {
-        'storage_list': storage_list
+        'storage_list': storage_list,
+        'form': form
     }
     return render(request, 'storage/index.html', context)
 
@@ -22,11 +26,13 @@ def detail(request: HttpRequest, storage_id):
     return render(request, 'storage/detail.html', context)
 
 
-def results(request: HttpRequest, storage_id):
-    response = "You're looking at the results of storage %s."
-    return HttpResponse(response % storage_id)
-
-
-def vote(request: HttpRequest, storage_id):
-    return HttpResponse("You're voting on storage %s." % storage_id)
-
+def create_storage(request: HttpRequest):
+    form = StorageForm(request.POST)
+    if form.is_valid():
+        storage = Storage(
+            location=form.cleaned_data.get("location"),
+            name=form.cleaned_data.get("name"),
+            capacity=form.cleaned_data.get("capacity")
+        )
+        storage.save()
+    return redirect(index)
