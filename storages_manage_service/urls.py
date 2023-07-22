@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+
+import storage.views
 from storages_manage_service.settings import DEBUG
 
 urlpatterns = [
+    path('', storage.views.index),
     path('storages/', include('storage.urls')),
     path('admin/', admin.site.urls),
 ]
