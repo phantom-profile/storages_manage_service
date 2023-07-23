@@ -1,13 +1,16 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, reverse
 from django.http import HttpRequest
 from django.db.models import Count
 
 from storage.models import Storage, Truck
 from storage.forms import StorageForm
+
 from lib.filter_storages_params import GetParamsFilter
+from lib.form_data_caching import FormsFactory
 
 
 def index(request: HttpRequest):
+    form = FormsFactory.restore_by_key(request.GET.get('storage_form_id'), 'storage')
     filter_service = GetParamsFilter(request.GET)
     if not filter_service.is_valid:
         return HttpResponse(content='invalid request params', status=422)
@@ -16,7 +19,7 @@ def index(request: HttpRequest):
     context = {
         'storage_list': storage_list,
         'change_to': filter_service.params['change_to'],
-        'form': StorageForm()
+        'form': form
     }
     return render(request, 'storage/index.html', context)
 
@@ -40,4 +43,7 @@ def create_storage(request: HttpRequest):
             capacity=form.cleaned_data.get("capacity")
         )
         storage.save()
-    return redirect(index)
+        return redirect(reverse('all-storages'))
+    else:
+        uuid = FormsFactory.save_state(request.POST)
+        return redirect(reverse('all-storages') + '?' + f"storage_form_id={uuid}")
