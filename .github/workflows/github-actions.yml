@@ -3,9 +3,8 @@ run-name: ${{ github.actor }} is using GitHub Actions 🚀
 
 on:
   push:
-    branches: [ master ]
   pull_request:
-    types: [opened, edited]
+    types: [opened]
 
 jobs:
   say-hello:
