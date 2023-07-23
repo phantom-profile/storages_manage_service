@@ -2,6 +2,7 @@ python-dotenv==1.0.0
 Django
 redis
 requests
+django-widget-tweaks
 
 # utils for console usage
 django-extensions
