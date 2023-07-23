@@ -3,10 +3,9 @@ from django.http import HttpRequest
 from django.db.models import Count
 
 from storage.models import Storage, Truck
-from storage.forms import StorageForm
 
 from lib.filter_storages_params import GetParamsFilter
-from lib.form_data_caching import FormsFactory
+from lib.forms_factory import FormsFactory
 
 
 def index(request: HttpRequest):
@@ -35,7 +34,7 @@ def detail(request: HttpRequest, storage_id):
 
 
 def create_storage(request: HttpRequest):
-    form = StorageForm(request.POST)
+    form = FormsFactory.produce('storage', params=request.POST)
     if form.is_valid():
         storage = Storage(
             location=form.cleaned_data.get("location"),

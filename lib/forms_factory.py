@@ -31,3 +31,12 @@ class FormsFactory:
         form = form_class(params)
         form.is_valid()
         return form
+
+    @classmethod
+    def produce(cls, form_type: str, params: dict = None):
+        form_class = cls.FORMS.get(form_type)
+        if not form_class:
+            raise AttributeError(f'form with type {form_type} not registered')
+        if not params:
+            return form_class()
+        return form_class(params)
