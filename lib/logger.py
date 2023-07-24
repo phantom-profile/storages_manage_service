@@ -6,11 +6,23 @@ class DefaultLogger:
     def __init__(self, log_name: str):
         self.log_path = f"{BASE_DIR}/log/{log_name}"
 
-    def info(self, message: str):
-        log_file = open(self.log_path, "w+")
-        log_file.write(f"[{datetime.now()}] I, {message}")
+    def info(self, message: str, extra_params: dict = None):
+        log_file = open(self.log_path, "a")
+        print(f"[{datetime.now()}] I, {message}, extra params = {extra_params}", file=log_file)
+        log_file.close()
+
+    def warn(self, error: Exception, extra_params: dict = None):
+        log_file = open(self.log_path, "a")
+        if error.args == ():
+            print(f"[{datetime.now()}] W, catched error class - {type(error)}, information not provided, extra params = {extra_params}", file=log_file)
+        else:
+            print(
+                f"[{datetime.now()}] W, catched error class - {type(error)}, provided information - {error}, extra params = {extra_params}", file=log_file)
         log_file.close()
 
 
-a = DefaultLogger("log.log")
-a.info("adad")
+s = MemoryError("asd")
+a = DefaultLogger("logasdad.log")
+a.warn(s)
+
+print(s.args)
