@@ -1,17 +1,32 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form action="{% url 'create-storage'%}" method="post" class="form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" name="submit" value="Submit">
-    </form>
-    {% if storage_list %}
-        <ul>
+  <form action="{% url 'create-storage'%}" method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" name="submit" value="Submit" class="btn btn-primary">
+  </form>
+  {% if storage_list %}
+    <table class="table table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th><a href="{% url 'all-storages' %}?sort=id&order={{ change_to | urlencode }}">ID</a></th>
+          <th><a href="{% url 'all-storages' %}?sort=name&order={{ change_to | urlencode }}">Name</a></th>
+          <th><a href="{% url 'all-storages' %}?sort=location&order={{ change_to | urlencode }}">Location</a></th>
+          <th><a href="{% url 'all-storages' %}?sort=trucks_count&order={{ change_to | urlencode }}">Available trucks</a></th>
+        </tr>
+      </thead>
+      <tbody>
         {% for storage in storage_list %}
-            <li><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a> - {{storage.trucks_count}} trucks available</li>
+          <tr>
+            <th>{{storage.id}}</th>
+            <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
+            <th>{{storage.location}}</th>
+            <th> {{storage.trucks_count}}</th>
+          </tr>
         {% endfor %}
-        </ul>
-    {% else %}
-        <p>No storages are available.</p>
-    {% endif %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No storages are available.</p>
+  {% endif %}
 {% endblock %}

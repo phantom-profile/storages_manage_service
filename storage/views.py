@@ -4,14 +4,23 @@ from django.db.models import Count
 
 from storage.models import Storage, Truck
 from storage.forms import StorageForm
+from lib.filter_storages_params import GetParamsFilter
 
 
 def index(request: HttpRequest):
-    form = StorageForm()
-    storage_list = Storage.objects.order_by('name').annotate(trucks_count=Count('truck'))
+    filter_service = GetParamsFilter(request.GET)
+    if not filter_service.is_valid:
+        return HttpResponse(content='invalid request params', status=422)
+
+    storage_list = Storage\
+        .objects\
+        .annotate(trucks_count=Count('truck'))\
+        .order_by(filter_service.sort_string)
+
     context = {
         'storage_list': storage_list,
-        'form': form
+        'change_to': filter_service.params['change_to'],
+        'form': StorageForm()
     }
     return render(request, 'storage/index.html', context)
 
