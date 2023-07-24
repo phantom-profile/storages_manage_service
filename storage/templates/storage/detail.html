@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block title %} <title> Detailed {{current_storage.name}} info </title> {% endblock %}
 {% block content %}
-    <h2>Now you are in <B>{{current_storage.name}}</B></h2>
-    {% if truck_list %}
-        <ul>
-        {% for truck in truck_list %}
-            <li>Truck - {{truck.truck_id}}, capacity - {{truck.capacity}}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No trucks are available.</p>
-    {% endif %}
-    <link><a href="{% url 'all-storages' %}">Back to storages</a>
+  <h2>Now you are in <B>{{current_storage.name}}</B></h2>
+  {% if truck_list %}
+    <ul>
+      {% for truck in truck_list %}
+        <li>Truck - {{truck.truck_id}}, capacity - {{truck.capacity}}</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No trucks are available.</p>
+  {% endif %}
+  <link><a href="{% url 'all-storages' %}">Back to storages</a>
 {% endblock %}

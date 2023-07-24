@@ -12,7 +12,11 @@ def index(request: HttpRequest):
     if not filter_service.is_valid:
         return HttpResponse(content='invalid request params', status=422)
 
-    storage_list = Storage.objects.annotate(trucks_count=Count('truck')).order_by(filter_service.sort_string)
+    storage_list = Storage\
+        .objects\
+        .annotate(trucks_count=Count('truck'))\
+        .order_by(filter_service.sort_string)
+
     context = {
         'storage_list': storage_list,
         'change_to': filter_service.params['change_to'],
