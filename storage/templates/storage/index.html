@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
   <div class="container bg-light">
     <h3>Register new storage</h3>
@@ -9,6 +10,7 @@
     </form>
   </div>
   {% if storage_list %}
+    <div id="storage-weather-info" class="alert alert-primary container"> Weather Info field</div>
     <div class="container">
       <table class="table table-striped">
         <thead class="thead-light">
@@ -17,6 +19,7 @@
             <th><a href="{% url 'all-storages' %}?sort=name&order={{ change_to | urlencode }}">Name</a></th>
             <th><a href="{% url 'all-storages' %}?sort=location&order={{ change_to | urlencode }}">Location</a></th>
             <th><a href="{% url 'all-storages' %}?sort=trucks_count&order={{ change_to | urlencode }}">Available trucks</a></th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +29,7 @@
               <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
               <th>{{storage.location}}</th>
               <th> {{storage.trucks_count}}</th>
+              <th><a href="#" onclick="show_weather('{{storage.location}}')">Get Weather</a></th>
             </tr>
           {% endfor %}
         </tbody>
@@ -34,4 +38,8 @@
   {% else %}
     <p>No storages are available.</p>
   {% endif %}
+{% endblock %}
+
+{% block javascript %}
+  <script type="text/javascript" src="{% static 'current_weather.js' %}"></script>
 {% endblock %}

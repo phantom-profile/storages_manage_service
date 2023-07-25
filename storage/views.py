@@ -1,10 +1,11 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, reverse
-from django.http import HttpRequest
+from django.http import HttpRequest, JsonResponse
 from django.db.models import Count
 
 from storage.models import Storage, Truck
 
 from lib.filter_storages_params import GetParamsFilter
+from lib.weather_service import WeatherService
 from lib.forms_factory import FormsFactory
 
 
@@ -14,9 +15,9 @@ def index(request: HttpRequest):
     if not filter_service.is_valid:
         return HttpResponse(content='invalid request params', status=422)
 
-    storage_list = Storage\
-        .objects\
-        .annotate(trucks_count=Count('truck'))\
+    storage_list = Storage \
+        .objects \
+        .annotate(trucks_count=Count('truck')) \
         .order_by(filter_service.sort_string)
 
     context = {
@@ -50,3 +51,12 @@ def create_storage(request: HttpRequest):
     else:
         uuid = FormsFactory.save_state(request.POST)
         return redirect(reverse('all-storages') + '?' + f"storage_form_id={uuid}")
+
+
+def show_current_weather(request: HttpRequest):
+    location = request.GET.get("location")
+    if not location:
+        return JsonResponse({"error": "no location provided"}, 422)
+
+    current_weather = WeatherService(location).current()
+    return JsonResponse(current_weather['response_body'], status=current_weather['status'])
