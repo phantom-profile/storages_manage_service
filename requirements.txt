@@ -3,6 +3,7 @@ flake8
 Django
 redis
 requests
+django-widget-tweaks
 
 # utils for console usage
 django-extensions
