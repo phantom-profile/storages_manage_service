@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'storage.apps.StorageConfig',
+    'users.apps.UsersConfig',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +131,8 @@ STATIC_ROOT = '/static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# AUTH system
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/storages/index'
+LOGOUT_REDIRECT_URL = '/users/login/'

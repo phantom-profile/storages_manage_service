@@ -1,26 +1,29 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
-from django.http import HttpRequest
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, reverse
+from django.http import HttpRequest, JsonResponse
 from django.db.models import Count
 
 from storage.models import Storage, Truck
-from storage.forms import StorageForm
+
 from lib.filter_storages_params import GetParamsFilter
+from lib.weather_service import WeatherService
+from lib.forms_factory import FormsFactory
 
 
 def index(request: HttpRequest):
+    form = FormsFactory.restore_by_key(request.GET.get('storage_form_id'), 'storage')
     filter_service = GetParamsFilter(request.GET)
     if not filter_service.is_valid:
         return HttpResponse(content='invalid request params', status=422)
 
-    storage_list = Storage\
-        .objects\
-        .annotate(trucks_count=Count('truck'))\
+    storage_list = Storage \
+        .objects \
+        .annotate(trucks_count=Count('truck')) \
         .order_by(filter_service.sort_string)
 
     context = {
         'storage_list': storage_list,
         'change_to': filter_service.params['change_to'],
-        'form': StorageForm()
+        'form': form
     }
     return render(request, 'storage/index.html', context)
 
@@ -36,7 +39,7 @@ def detail(request: HttpRequest, storage_id):
 
 
 def create_storage(request: HttpRequest):
-    form = StorageForm(request.POST)
+    form = FormsFactory.produce('storage', params=request.POST)
     if form.is_valid():
         storage = Storage(
             location=form.cleaned_data.get("location"),
@@ -44,4 +47,16 @@ def create_storage(request: HttpRequest):
             capacity=form.cleaned_data.get("capacity")
         )
         storage.save()
-    return redirect(index)
+        return redirect(reverse('all-storages'))
+    else:
+        uuid = FormsFactory.save_state(request.POST)
+        return redirect(reverse('all-storages') + '?' + f"storage_form_id={uuid}")
+
+
+def show_current_weather(request: HttpRequest):
+    location = request.GET.get("location")
+    if not location:
+        return JsonResponse({"error": "no location provided"}, 422)
+
+    current_weather = WeatherService(location).current()
+    return JsonResponse(current_weather['response_body'], status=current_weather['status'])
