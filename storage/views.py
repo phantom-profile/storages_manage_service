@@ -1,29 +1,22 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, reverse
 from django.http import HttpRequest, JsonResponse
-from django.db.models import Count
 
 from storage.models import Storage, Truck
 
-from lib.filter_storages_params import GetParamsFilter
+from lib.storages_services import GetStoragesService
 from lib.weather_service import WeatherService
 from lib.forms_factory import FormsFactory
 
 
 def index(request: HttpRequest):
-    form = FormsFactory.restore_by_key(request.GET.get('storage_form_id'), 'storage')
-    filter_service = GetParamsFilter(request.GET)
-    if not filter_service.is_valid:
-        return HttpResponse(content='invalid request params', status=422)
-
-    storage_list = Storage \
-        .objects \
-        .annotate(trucks_count=Count('truck')) \
-        .order_by(filter_service.sort_string)
+    create_form = FormsFactory.restore_by_key(request.GET.get('storage_form_id'), 'storage')
+    storages_params = FormsFactory.produce('filter-storages', params=request.GET)
+    storage_list = GetStoragesService(form=storages_params).list
 
     context = {
         'storage_list': storage_list,
-        'change_to': filter_service.params['change_to'],
-        'form': form
+        'form': create_form,
+        'filter_form': storages_params
     }
     return render(request, 'storage/index.html', context)
 
