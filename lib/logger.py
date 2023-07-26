@@ -28,14 +28,14 @@ class AppLogger:
             raise WrongLogName("The entered file name does not match the format (name.log)")
 
     @staticmethod
-    def __build_log_str(message: str = None, error: Exception = None, extra_params: dict = None) -> str:
+    def __build_log_str(message: str = None, error: Exception = None, params: dict = None) -> str:
         if message:
-            return f"[{datetime.now()}] I, {message}, extra params = {extra_params}"
+            return f"[{datetime.now()}] I, {message}, extra params = {params}"
         if not error.args:
             info = "information not provided"
         else:
             info = f"info - {error.args}"
-        return f"[{datetime.now()}] W, catched error class - {type(error)}, {info}, extra params = {extra_params}"
+        return f"[{datetime.now()}] W, error - {type(error)}, {info}, extra params = {params}"
 
     def __create_path(self, name: str):
         if path.exists(self.LOG_DIR):
