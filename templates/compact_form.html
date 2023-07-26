@@ -1,0 +1,10 @@
+{% load widget_tweaks %}
+<div class="form-row">
+  {% for field in form.visible_fields %}
+    <div class="col-md-2">
+      {{ field.label_tag }}
+      {% render_field field class="form-control" %}
+    </div>
+  {% endfor %}
+  <div class="col-auto"><input type="submit" name="submit" value="{{ btn }}" class="btn btn-primary"></div>
+</div>

@@ -9,35 +9,39 @@
       <div class="col-auto"><input type="submit" name="submit" value="Submit" class="btn btn-primary"></div>
     </form>
   </div>
-  {% if storage_list %}
-    <div id="storage-weather-info" class="alert alert-primary container"> Weather Info field</div>
-    <div class="container">
-      <table class="table table-striped">
-        <thead class="thead-light">
+  <div class="container bg-light">
+    <h5>Search storages:</h5>
+    <form action="{% url 'all-storages'%}" method="get">
+      {% include 'compact_form.html' with form=filter_form btn="Search" %}
+    </form>
+  </div>
+  <div id="storage-weather-info" class="alert alert-primary container">Weather Info field</div>
+  <div class="container">
+    <table class="table table-striped">
+      <thead class="thead-light">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Location</th>
+          <th>Capacity</th>
+          <th>Available trucks</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for storage in storage_list %}
           <tr>
-            <th><a href="{% url 'all-storages' %}?sort=id&order={{ change_to | urlencode }}">ID</a></th>
-            <th><a href="{% url 'all-storages' %}?sort=name&order={{ change_to | urlencode }}">Name</a></th>
-            <th><a href="{% url 'all-storages' %}?sort=location&order={{ change_to | urlencode }}">Location</a></th>
-            <th><a href="{% url 'all-storages' %}?sort=trucks_count&order={{ change_to | urlencode }}">Available trucks</a></th>
-            <th>Actions</th>
+            <th>{{storage.id}}</th>
+            <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
+            <th>{{storage.location}}</th>
+            <th>{{storage.capacity}}</th>
+            <th> {{storage.trucks_count}}</th>
+            <th><a href="#" onclick="show_weather('{{storage.location}}')">Get Weather</a></th>
           </tr>
-        </thead>
-        <tbody>
-          {% for storage in storage_list %}
-            <tr>
-              <th>{{storage.id}}</th>
-              <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
-              <th>{{storage.location}}</th>
-              <th> {{storage.trucks_count}}</th>
-              <th><a href="#" onclick="show_weather('{{storage.location}}')">Get Weather</a></th>
-            </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  {% else %}
-    <p>No storages are available.</p>
-  {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}
 
 {% block javascript %}
