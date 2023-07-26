@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, reverse
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.http import HttpRequest, JsonResponse
 
 from storage.models import Storage, Truck
