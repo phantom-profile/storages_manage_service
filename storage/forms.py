@@ -51,7 +51,7 @@ class FilterStoragesForm(forms.Form):
         required=False
     )
     sort_by = forms.CharField(label='Sort by', widget=forms.Select(choices=ORDER_FIELDS))
-    reverse_order = forms.BooleanField(label='Reverse order', required=False)
+    reverse_order = forms.BooleanField(label='Reverse order', required=False, initial=True)
 
     @property
     def sort_string(self) -> str:
