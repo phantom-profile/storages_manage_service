@@ -2,12 +2,13 @@ from json import dumps, loads
 from uuid import uuid4
 
 from lib.redis_client import Red
-from storage.forms import StorageForm
+from storage.forms import StorageForm, FilterStoragesForm
 
 
 class FormsFactory:
     FORMS = {
         'storage': StorageForm,
+        'filter-storages': FilterStoragesForm
     }
 
     @classmethod
