@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from users.models import CreditCard
 
 
 def register(request):
@@ -16,3 +17,11 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+def index(request):
+    all_cards = CreditCard.objects.all()
+    context = {
+        'cards': all_cards
+    }
+    return render(request, 'index.html', context)

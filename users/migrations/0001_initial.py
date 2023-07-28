@@ -21,9 +21,9 @@ class Migration(migrations.Migration):
                 ('cvv', models.CharField(max_length=3)),
                 ('owner', models.CharField(max_length=50)),
                 ('expires_at', models.DateTimeField()),
-                ('vendor', models.CharField(max_length=4, validators=[users.models.validation_vendor])),
+                ('vendor', models.CharField(max_length=4)),
                 ('bank', models.CharField(max_length=50)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
-            ],
-        ),
+            ]
+        )
     ]

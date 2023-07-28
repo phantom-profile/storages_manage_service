@@ -1,24 +1,20 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.core.exceptions import ValidationError
+from django.core.validators import MinLengthValidator
 from django.utils import timezone
 
 
-def validation_vendor(vendor):
-    vendors = ["VISA", "MC", "MIR"]
-    if vendor not in vendors:
-        raise ValidationError("Invalid input. Valid values: %(vendors)", params={"vendors": vendors})
-
-
 class CreditCard(models.Model):
-    card_number = models.CharField(max_length=16, blank=False, null=False)
+    card_number = models.CharField(validators=[MinLengthValidator], max_length=16, blank=False, null=False)
     cvv = models.CharField(max_length=3, blank=False, null=False)
     owner = models.CharField(max_length=50, blank=False, null=False)
-    expires_at = models.DateTimeField(blank=True, null=True)
-    vendor = models.CharField(max_length=4, validators=[validation_vendor])
+    expires_at = models.DateTimeField(blank=False, null=False)
+    vendor = models.CharField(max_length=4, blank=False, null=False)
     bank = models.CharField(max_length=50, blank=False, null=False)
     created_at = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return f"card number - {self.card_number},cvv - {self.cvv}, owner - {self.owner}"
+
 
 User = get_user_model()
-q = CreditCard(card_number = 12, cvv ="SDF", owner="asd",vendor="MIR",bank="asd")
