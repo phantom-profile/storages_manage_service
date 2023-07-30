@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <h2><b>Welcome to your page @{{ user.username }}!</b></h2>
+  <div class="card" style="width: 23rem;">
+    <img src="{% static 'user_without_photo.png' %}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h3 class="card-title">Your email: {{ user.email }}</h3>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary">Add credit card to your account</a>
+    </div>
+  </div>
+{% endblock %}
