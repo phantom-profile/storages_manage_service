@@ -1,8 +1,5 @@
 {% block content %}
-    <form>
-        {% csrf_token %}
-        <input type="submit" value="Submit">
-    </form>
+{% base html %}
     {% for card in cards %}
         {{card}}<br>
     {% endfor %}
