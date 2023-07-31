@@ -13,7 +13,7 @@ class Storage(models.Model):
     created_at = models.DateTimeField(default=timezone.now, null=False)
 
     def __str__(self):
-        return f"{self.name}, {self.location}"
+        return f"Storage(id={self.pk}, name={self.name}, location={self.location})"
 
 
 class Truck(models.Model):
