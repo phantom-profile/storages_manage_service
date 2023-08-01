@@ -35,7 +35,6 @@ class CacheService:
 
 
 class BaseClient:
-    TOKEN_VARIABLE = ''
     URL = ''
     TOKEN = ''
 
