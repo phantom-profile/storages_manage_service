@@ -7,7 +7,7 @@ from storages_manage_service.settings import env_variables
 
 
 # docs - https://www.weatherapi.com/docs/
-class WeatherService(BaseClient):
+class WeatherApiClient(BaseClient):
     TOKEN = env_variables.get('WEATHER_API_TOKEN')
     URL = 'https://api.weatherapi.com/v1'
     FOUR_HOURS = 4 * 60 * 60
