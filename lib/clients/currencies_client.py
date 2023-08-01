@@ -31,7 +31,7 @@ class CurrenciesApiClient(BaseClient):
         if self.cacher.is_exist():
             cache = self.cacher.get_cached()
             data = cache['response_body'].get('data', {})
-            if self.convert_to not in data:
+            if self.convert_to in data:
                 return cache
 
         self._response = get(

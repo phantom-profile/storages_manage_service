@@ -56,8 +56,10 @@ class BaseClient:
             'response_body': self._parsed_response
         }
 
-    def _build_url(self, path: str):
-        return f'{self.URL}/{path}'
+    def _build_url(self, path: str, request_format: str = None):
+        if not request_format:
+            return f'{self.URL}/{path}'
+        return f'{self.URL}/{path}.{request_format}'
 
     @property
     def _is_successful(self):

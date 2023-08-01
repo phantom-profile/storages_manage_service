@@ -25,7 +25,7 @@ class WeatherService(BaseClient):
             return self.cacher.get_cached()
 
         self._response = get(
-            url=self._build_url('current'),
+            url=self._build_url('current', request_format='json'),
             params={
                 'q': self.location,
                 'lang': self.options.get('lang', 'en'),
