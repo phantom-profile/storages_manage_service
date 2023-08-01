@@ -4,7 +4,7 @@ from django.http import HttpRequest, JsonResponse
 from storage.models import Storage, Truck
 
 from lib.storages_services import GetStoragesService
-from lib.weather_service import WeatherService
+from lib.clients.weather_client import WeatherService
 from lib.forms_factory import FormsFactory
 
 
