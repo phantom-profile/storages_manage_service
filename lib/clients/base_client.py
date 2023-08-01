@@ -40,7 +40,7 @@ class BaseClient:
 
     def __init__(self):
         if not self.TOKEN:
-            raise AttributeError('Weather API token is empty! Add it to .env config')
+            raise AttributeError('API token is empty! Add it to .env config')
 
         self._response: Optional[Response] = None
         self.cacher = CacheService()
