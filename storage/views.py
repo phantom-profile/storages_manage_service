@@ -4,7 +4,7 @@ from django.http import HttpRequest, JsonResponse
 from storage.models import Storage, Truck
 
 from lib.storages_services import GetStoragesService
-from lib.weather_service import WeatherService
+from lib.clients.weather_client import WeatherApiClient
 from lib.forms_factory import FormsFactory
 
 
@@ -51,5 +51,5 @@ def show_current_weather(request: HttpRequest):
     if not location:
         return JsonResponse({"error": "no location provided"}, 422)
 
-    current_weather = WeatherService(location).current()
+    current_weather = WeatherApiClient(location).current()
     return JsonResponse(current_weather['response_body'], status=current_weather['status'])
