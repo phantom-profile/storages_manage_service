@@ -34,3 +34,26 @@ function build_response(data) {
 
   return msg
 }
+
+function show_currencies(location) {
+  $.ajax({
+    url: '/users/convert_currency',
+    data: {
+      "convert_from": $('#id_convert_from').val(),
+      "convert_to": $('#id_convert_to').val(),
+      "amount_from": $('#id_amount_from').val()
+    },
+    dataType: 'json',
+    success: function(data) {
+      $('#id_amount_to').val(data.to_value)
+    },
+    error : function(response){
+     alert(response.responseJSON.error)
+    }
+  })
+}
+
+$('#id_currencies_form').on('submit', function(event){
+    event.preventDefault();
+    show_currencies();
+});
