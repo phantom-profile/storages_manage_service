@@ -1,13 +1,17 @@
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+
+from lib.users_services import CurrencyConverter, ConvertorError
+from lib.forms_factory import FormsFactory
 from users.models import CreditCard
 
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html', {})
+    return render(request, 'profile.html', {'convertor_form': FormsFactory.produce('convertor')})
 
 
 def register(request):
@@ -23,6 +27,24 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/register.html', {'form': form})
+
+
+def convert_currencies(request):
+    form = FormsFactory.produce('convertor', request.GET)
+    if not form.is_valid():
+        return JsonResponse({"error": form.errors}, status=422)
+
+    try:
+        converter = CurrencyConverter(
+            convert_from=form.cleaned_data['convert_from'],
+            convert_to=form.cleaned_data['convert_to'],
+            amount=form.cleaned_data['amount_from']
+        )
+        convertion_result = converter.convert()
+    except ConvertorError as e:
+        return JsonResponse({"error": str(e)}, status=422)
+
+    return JsonResponse(convertion_result, status=200)
 
 
 def index(request):

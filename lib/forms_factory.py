@@ -3,12 +3,14 @@ from uuid import uuid4
 
 from lib.redis_client import Red
 from storage.forms import StorageForm, FilterStoragesForm
+from users.forms import ConvertorForm
 
 
 class FormsFactory:
     FORMS = {
         'storage': StorageForm,
-        'filter-storages': FilterStoragesForm
+        'filter-storages': FilterStoragesForm,
+        'convertor': ConvertorForm
     }
 
     @classmethod
