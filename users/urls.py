@@ -18,6 +18,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('register/', views.register, name='register'),
     path('cards/', views.index, name='cards'),
+    path('convertor/', views.get_convertor, name='get-convertor'),
     path('convert_currency/', views.convert_currencies, name='convertor'),
     path("", include("django.contrib.auth.urls"))
 ]
