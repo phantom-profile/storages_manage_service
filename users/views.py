@@ -29,6 +29,11 @@ def register(request):
     return render(request, 'registration/register.html', {'form': form})
 
 
+def get_convertor(request):
+    form = FormsFactory.produce('convertor', request.GET)
+    return render(request, 'convertor_modal.html', {'convertor_form': form})
+
+
 def convert_currencies(request):
     form = FormsFactory.produce('convertor', request.GET)
     if not form.is_valid():
