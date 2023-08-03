@@ -9,10 +9,13 @@ from lib.forms_factory import FormsFactory
 
 
 def index(request: HttpRequest):
-    create_form = FormsFactory.restore_by_key(request.GET.get('storage_form_id'), 'storage')
     storages_params = FormsFactory.produce('filter-storages', params=request.GET)
     storage_list = GetStoragesService(form=storages_params).list
 
+    if request.GET.get('table_only'):
+        return render(request, 'storage/storages_table.html', {'storage_list': storage_list})
+
+    create_form = FormsFactory.restore_by_key(request.GET.get('storage_form_id'), 'storage')
     context = {
         'storage_list': storage_list,
         'form': create_form,

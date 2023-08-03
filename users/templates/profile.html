@@ -14,15 +14,6 @@
         </div>
       </div>
     </div>
-    <div class="col">
-      <h5>Currencies convertor:</h5>
-      <form method="get" action="{% url 'convertor' %}" id="id_currencies_form">
-        {% include 'compact_form.html' with form=convertor_form btn="Convert" %}
-      </form>
-    </div>
   </div>
 </div>
-{% endblock %}
-{% block javascript %}
-  <script type="text/javascript" src="{% static 'ajax_tools.js' %}"></script>
 {% endblock %}

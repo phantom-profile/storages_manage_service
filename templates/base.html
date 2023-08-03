@@ -1,5 +1,6 @@
-<html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8">
     {% load static %}
     <link rel="icon" type="image/x-icon" href="{% static 'truck_icon.png' %}">
     {% block title %} <title>Storages Manage</title> {% endblock %}
@@ -18,10 +19,13 @@
     </style>
   </head>
   <body>
+    <div id="convertor-form-display"></div>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="#"><img src="{% static 'truck_icon.png' %}" style="hight: 35px; width: 40px;">Storages Manage Service</a>
         <ul class="nav ">
+          <li class="nav-item"><a class="nav-link active" href="#" id="converter_link">Convertor</a></li>
           <li class="nav-item"><a class="nav-link active" href="{% url 'all-storages' %}">Storages</a></li>
           {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link active" href="{% url 'profile' %}">Profile</a></li>
@@ -47,6 +51,7 @@
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"
     ></script>
+    <script type="text/javascript" src="{% static 'ajax_tools.js' %}"></script>
     {% block javascript %}
     {% endblock javascript %}
     <footer class="text-center text-lg-start bg-light text-muted" style="width: 100%; bottom: 0;">

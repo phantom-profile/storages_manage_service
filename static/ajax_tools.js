@@ -10,7 +10,6 @@ function show_weather(location) {
     },
     dataType: 'json',
     success: function(data) {
-      console.log(data)
       $('#storage-weather-info').html(build_response(data))
     },
     error : function(response){
@@ -35,7 +34,7 @@ function build_response(data) {
   return msg
 }
 
-function show_currencies(location) {
+function show_currencies() {
   $.ajax({
     url: '/users/convert_currency',
     data: {
@@ -53,7 +52,50 @@ function show_currencies(location) {
   })
 }
 
-$('#id_currencies_form').on('submit', function(event){
-    event.preventDefault();
-    show_currencies();
+$('#converter_link').click(function(e) {
+  $.ajax({
+    method: 'GET',
+    url: '/users/convertor',
+    success: function(data) {
+      $('#convertor-form-display').html(data)
+      $('#convertor_modal').modal('show');
+      $('#id_currencies_form').on(
+        'submit',
+        function(event) {
+          event.preventDefault()
+          show_currencies()
+        }
+      )
+    },
+    error: function(error_data) {
+      console.log("error")
+      console.log(error_data)
+    }
+  })
+})
+
+function refresh_table() {
+  $.ajax({
+    url: '/storages/index',
+    data: {
+      "table_only": true,
+      "name__contains": $('#id_name__contains').val(),
+      "location__contains": $('#id_location__contains').val(),
+      "capacity__gte": $('#id_capacity__gte').val(),
+      "sort_by": $('#id_sort_by').val(),
+      "reverse_order": $('#id_reverse_order').is(":checked"),
+    },
+    dataType: 'html',
+    success: function(data) {
+      $('#storages_table').html(data)
+    },
+    error : function(response){
+     alert(response.error)
+    }
+  })
+}
+
+$('#id_storages_form').on('submit', function(event){
+  event.preventDefault();
+  refresh_table();
 });
