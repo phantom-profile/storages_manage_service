@@ -1,0 +1,24 @@
+<table class="table table-striped">
+  <thead class="thead-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Capacity</th>
+      <th>Available trucks</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for storage in storage_list %}
+      <tr>
+        <th>{{storage.id}}</th>
+        <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
+        <th>{{storage.location}}</th>
+        <th>{{storage.capacity}}</th>
+        <th> {{storage.trucks_count}}</th>
+        <th><a href="#" onclick="show_weather('{{storage.location}}')">Get Weather</a></th>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
