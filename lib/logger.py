@@ -14,13 +14,13 @@ class AppLogger:
         self.__correct_log_file_name(log_name)
         self.log_path = self.__create_path(log_name)
 
-    def info(self, message: str, extra_params: dict = None):
+    def info(self, message: str, params: dict = None):
         with open(self.log_path, "a") as log_file:
-            print(self.__build_log_str(message=message, extra_params=extra_params), file=log_file)
+            print(self.__build_log_str(message=message, params=params), file=log_file)
 
-    def warn(self, error: Exception, extra_params: dict = None):
+    def warn(self, error: Exception, params: dict = None):
         with open(self.log_path, "a") as log_file:
-            print(self.__build_log_str(error=error, extra_params=extra_params), file=log_file)
+            print(self.__build_log_str(error=error, params=params), file=log_file)
 
     @staticmethod
     def __correct_log_file_name(name: str):
@@ -42,3 +42,6 @@ class AppLogger:
             return self.LOG_DIR / name
         mkdir(self.LOG_DIR)
         return self.LOG_DIR / name
+
+
+default_logger = AppLogger("log.log")
