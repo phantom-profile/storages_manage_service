@@ -53,7 +53,24 @@ function show_currencies(location) {
   })
 }
 
-$('#id_currencies_form').on('submit', function(event){
-    event.preventDefault();
-    show_currencies();
-});
+$('#converter_link').click(function(e) {
+  $.ajax({
+    method: 'GET',
+    url: '/users/convertor',
+    success: function(data) {
+      $('#convertor-form-display').html(data)
+      $('#exampleModal').modal('show');
+      $('#id_currencies_form').on(
+        'submit',
+        function(event) {
+          event.preventDefault()
+          show_currencies()
+        }
+      )
+    },
+    error: function(error_data) {
+      console.log("error")
+      console.log(error_data)
+    }
+  })
+})
