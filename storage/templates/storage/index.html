@@ -11,36 +11,13 @@
   </div>
   <div class="container bg-light">
     <h5>Search storages:</h5>
-    <form action="{% url 'all-storages'%}" method="get">
+    <form action="{% url 'all-storages'%}" method="get" id="id_storages_form">
       {% include 'compact_form.html' with form=filter_form btn="Search" %}
     </form>
   </div>
   <div id="storage-weather-info" class="alert alert-primary container">Weather Info field</div>
-  <div class="container">
-    <table class="table table-striped">
-      <thead class="thead-light">
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Location</th>
-          <th>Capacity</th>
-          <th>Available trucks</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for storage in storage_list %}
-          <tr>
-            <th>{{storage.id}}</th>
-            <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
-            <th>{{storage.location}}</th>
-            <th>{{storage.capacity}}</th>
-            <th> {{storage.trucks_count}}</th>
-            <th><a href="#" onclick="show_weather('{{storage.location}}')">Get Weather</a></th>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  <div class="container" id="storages_table">
+    {% include 'storage/storages_table.html' with storage_list=storage_list %}
   </div>
 {% endblock %}
 
