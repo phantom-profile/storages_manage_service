@@ -20,5 +20,6 @@ urlpatterns = [
     path('cards/', views.index, name='cards'),
     path('convertor/', views.get_convertor, name='get-convertor'),
     path('convert_currency/', views.convert_currencies, name='convertor'),
-    path("", include("django.contrib.auth.urls"))
+    path("", include("django.contrib.auth.urls")),
+    path("cards/trust", views.trust_card, name='trust-card')
 ]
