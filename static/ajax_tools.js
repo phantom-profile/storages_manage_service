@@ -68,7 +68,7 @@ function refresh_table() {
       $('#storages_table').html(data)
     },
     error : function(response){
-     alert(response.responseJSON.error)
+     alert(response.error)
     }
   })
 }
