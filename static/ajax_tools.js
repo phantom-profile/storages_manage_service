@@ -59,7 +59,7 @@ $('#converter_link').click(function(e) {
     url: '/users/convertor',
     success: function(data) {
       $('#convertor-form-display').html(data)
-      $('#exampleModal').modal('show');
+      $('#convertor_modal').modal('show');
       $('#id_currencies_form').on(
         'submit',
         function(event) {
