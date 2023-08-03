@@ -1,5 +1,4 @@
 from requests import get, post
-from datetime import datetime
 
 from lib.clients.base_client import BaseClient
 from storages_manage_service.settings import env_variables
