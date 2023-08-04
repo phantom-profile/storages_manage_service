@@ -37,7 +37,7 @@ class AppLogger:
         return self.LOG_DIR / self.filename
 
     def _mklog(self, inserted: str):
-        return f"[{datetime.now()}] {inserted}, extra params = {self.params}"
+        return f"[{datetime.now()}] {inserted}, extra params = {self.params or {}}"
 
 
 default_logger = AppLogger("log.log")
