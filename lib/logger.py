@@ -37,11 +37,6 @@ class AppLogger:
         mkdir(self.LOG_DIR)
         return self.LOG_DIR / self.filename
 
-    def _validate_file_name(self, filename: str):
-        name_as_list = filename.split(".")
-        if len(name_as_list) != 2 or name_as_list[-1] != self.EXTENSION:
-            raise WrongLogName()
-
     def _string_template(self, inserted: str):
         return f"[{datetime.now()}] {inserted}, extra params = {self.params}"
 
