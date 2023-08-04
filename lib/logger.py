@@ -22,13 +22,12 @@ class AppLogger:
     def info(self, message: str, params: dict = None):
         self.params = params
         with open(self.filepath, "a") as log_file:
-            print(self._string_template(f"I, {message}"), file=log_file)
+            print(self._mklog(f"I, {message}"), file=log_file)
 
     def warn(self, error: Exception, params: dict = None):
         self.params = params
-        info = f"info - {error.args}" if error.args else "information not provided"
         with open(self.filepath, "a") as log_file:
-            print(self._string_template(f"W, error - {type(error)}, {info}"), file=log_file)
+            print(self._mklog(f"W, error - {type(error)}, info - {error.args}"), file=log_file)
 
     @property
     def filepath(self):
@@ -37,7 +36,7 @@ class AppLogger:
         mkdir(self.LOG_DIR)
         return self.LOG_DIR / self.filename
 
-    def _string_template(self, inserted: str):
+    def _mklog(self, inserted: str):
         return f"[{datetime.now()}] {inserted}, extra params = {self.params}"
 
 
