@@ -40,4 +40,5 @@ class AppLogger:
         return f"[{datetime.now()}] {inserted}, extra params = {self.params or {}}"
 
 
-default_logger = AppLogger("log.log")
+def get_logger():
+    return AppLogger("log.log")
