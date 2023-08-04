@@ -4,20 +4,17 @@ from os import path, mkdir
 
 
 class WrongLogName(Exception):
-    MESSAGE = "The entered file name does not match the format (name.log)"
-
-    def __init__(self):
-        super().__init__(self.MESSAGE)
+    ...
 
 
 class AppLogger:
-    EXTENSION = 'log'
+    NAME_ERROR = "The entered file name does not match the format (name.log)"
     LOG_DIR = BASE_DIR / "log"
 
     def __init__(self, filename: str):
         name_as_list = filename.split(".")
         if len(name_as_list) != 2 or name_as_list[-1] != 'log':
-            raise WrongLogName()
+            raise WrongLogName(self.NAME_ERROR)
 
         self.filename = filename
         self.params = None
