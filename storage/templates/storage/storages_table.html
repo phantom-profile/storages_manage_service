@@ -5,6 +5,7 @@
       <th>Name</th>
       <th>Location</th>
       <th>Capacity</th>
+      <th>Current load</th>
       <th>Available trucks</th>
       <th>Actions</th>
     </tr>
@@ -16,6 +17,7 @@
         <th><a href="{% url 'one-storage' storage.id %}">{{ storage.name }}</a></th>
         <th>{{storage.location}}</th>
         <th>{{storage.capacity}}</th>
+        <th>{{storage.current_load}}</th>
         <th> {{storage.trucks_count}}</th>
         <th><a href="#" onclick="show_weather('{{storage.location}}')">Get Weather</a></th>
       </tr>

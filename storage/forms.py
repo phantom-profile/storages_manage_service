@@ -14,6 +14,7 @@ class FilterStoragesForm(forms.Form):
         ('name', 'Name'),
         ('location', 'Location'),
         ('capacity', 'Capacity'),
+        ('current_load', 'Current load'),
         ('trucks_count', 'Trucks available')
     )
     ORDERS_MAP = {
