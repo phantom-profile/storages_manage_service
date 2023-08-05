@@ -37,18 +37,7 @@
         </ul>
       </div>
     </nav>
-    <div style="z-index: 9999; position:fixed; top: 100; right: 20;" id="alert-box">
-    {% if messages %}
-        {% for message in messages %}
-            <div class="{{message.tags}}" role="alert">
-              {{message}}
-              <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-        {% endfor %}
-      {% endif %}
-  </div>
+    {% include 'alerts.html' %}
 
     {% block content %}{% endblock %}
  
