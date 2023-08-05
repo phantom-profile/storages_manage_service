@@ -99,3 +99,11 @@ $('#id_storages_form').on('submit', function(event){
   event.preventDefault();
   refresh_table();
 });
+
+$(document).ready(function() {
+  $('#alert-box .alert').each(function(_, value) {
+    $(value).delay(4000).fadeTo(2000, 500).slideUp(500, function(){
+       $(value).slideUp(500);
+    });
+  });
+});

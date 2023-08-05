@@ -37,27 +37,20 @@
         </ul>
       </div>
     </nav>
-    <div class="container-fluid" style="z-index: 9999; position:fixed;">
+    <div style="z-index: 9999; position:fixed; top: 100; right: 20;" id="alert-box">
     {% if messages %}
         {% for message in messages %}
-          <div class="row ">
-            <div class="col-md-8"></div>
-            <div class="{{message.tags}} col-sm" role="alert">
+            <div class="{{message.tags}}" role="alert">
               {{message}}
               <button type="button" class="close" data-dismiss="alert" aria-label="close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-          </div>
-          
         {% endfor %}
       {% endif %}
   </div>
 
-    {% block content %}
-    
-    
-    {% endblock %}
+    {% block content %}{% endblock %}
  
     <!-- JS, Popper.js, and jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
