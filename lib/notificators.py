@@ -7,16 +7,12 @@ class FlashNotifier:
 
     def info(self, text: str):
         messages.add_message(
-            self.request,
-            messages.INFO,
-            text,
+            self.request, level=messages.INFO, message=text,
             extra_tags='alert alert-primary alert-dismissible fade show'
         )
 
     def error(self, text: str):
         messages.add_message(
-            self.request,
-            messages.ERROR,
-            text,
+            self.request, level=messages.ERROR, message=text,
             extra_tags='alert alert-danger alert-dismissible fade show'
         )

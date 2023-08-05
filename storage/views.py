@@ -28,9 +28,10 @@ def index(request: HttpRequest):
 def detail(request: HttpRequest, storage_id):
     truck_list = Truck.objects.filter(current_storage=storage_id)
     current_storage = get_object_or_404(Storage, id=storage_id)
+
     notifier = FlashNotifier(request)
     notifier.info(f'Welcome to page {request.get_full_path()}')
-    notifier.error(f'It is error! god damn!')
+    notifier.error('It is error! god damn!')
 
     context = {
         'truck_list': truck_list,
