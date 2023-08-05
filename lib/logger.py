@@ -40,5 +40,5 @@ class AppLogger:
         return f"[{datetime.now()}] {inserted}, extra params = {self.params or {}}"
 
 
-def get_logger():
-    return AppLogger("log.log")
+def get_logger(filename: str = 'app.log'):
+    return AppLogger(filename)
