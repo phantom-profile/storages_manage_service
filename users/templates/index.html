@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if failed_status %}
+      <h1>PIZDA</h1>
+    {% endif %}
     <form action="{% url 'trust-card' %}" method="post">
       {% csrf_token %}
       {% include 'form_fields.html' with form=form %}
