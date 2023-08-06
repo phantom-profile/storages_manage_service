@@ -100,10 +100,20 @@ $('#id_storages_form').on('submit', function(event){
   refresh_table();
 });
 
+function delayTime(alertObject) {
+  delayClass = alertObject.attr('class').split(' ').filter(option => option.startsWith('delay-'))[0]
+  if (!delayClass) { return 5000 }
+
+  return Number(delayClass.split('-')[1])
+}
+
 $(document).ready(function() {
   $('#alert-box .alert').each(function(_, value) {
-    $(value).delay(4000).fadeTo(2000, 500).slideUp(500, function(){
-       $(value).slideUp(500);
+    alertObject = $(value)
+    delay = delayTime(alertObject)
+    console.log(delay)
+    alertObject.delay(Number(delay)).fadeTo(2000, 500).slideUp(500, function(){
+       alertObject.slideUp(500);
     });
   });
 });
