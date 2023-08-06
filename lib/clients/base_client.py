@@ -69,4 +69,8 @@ class BaseClient:
         try:
             return self._response.json()
         except exceptions.JSONDecodeError:
-            return {"error": "impossible to decode to JSON", "original_text": self._response.text}
+            return {
+                "error": {
+                    "message": "impossible to decode to JSON",
+                    "original_text": self._response.text}
+            }

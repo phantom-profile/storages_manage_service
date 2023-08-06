@@ -33,8 +33,7 @@ class WeatherApiClient(BaseClient):
             }
         )
 
-        if self._is_successful:
-            self.cacher.save(self._service_response, time=self.FOUR_HOURS)
+        self.cacher.save(self._service_response, time=self.FOUR_HOURS)
         return self._service_response
 
     @property
