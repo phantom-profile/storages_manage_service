@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest
 
 from storage.models import Storage, Truck
 
-from lib.storages_services import GetStoragesService
-from lib.clients.weather_client import WeatherApiClient
+from lib.storages_services import GetStoragesService, GetWeatherService
 from lib.forms_factory import FormsFactory
 from lib.notificators import FlashNotifier
 
@@ -56,31 +55,9 @@ def create_storage(request: HttpRequest):
 
 
 def show_current_weather(request: HttpRequest):
-    notifier = FlashNotifier(request)
+    GetWeatherService(
+        location=request.GET.get("location", ''),
+        notifier=FlashNotifier(request)
+    ).perform()
 
-    location = request.GET.get("location")
-    if not location:
-        notifier.error("no location provided")
-        return redirect(reverse('all-storages'))
-
-    current_weather = WeatherApiClient(location).current()
-    if not current_weather['is_successful']:
-        error = current_weather['response_body']['error']
-        notifier.error(error.get('message', 'Something went wrong. Try later'))
-        return redirect(reverse('all-storages'))
-
-    data = current_weather['response_body']
-    w = {
-        'country': data['location']['country'],
-        'city': data['location']['name'],
-        'upd': data['current']['last_updated'],
-        'cond': data['current']['condition']['icon'],
-        'temp': data['current']['temp_c'],
-        'wind': data['current']['wind_kph']
-    }
-
-    img = f'<img src="{w["cond"]}" width = "20" height = "20">'
-    msg = f'Weather in {w["country"]} {w["city"]} at {w["upd"]}: {img} t: {w["temp"]} C°, w: {w["wind"]} km / h'
-
-    notifier.info(msg, delay=10_000)
     return redirect(reverse('all-storages'))
