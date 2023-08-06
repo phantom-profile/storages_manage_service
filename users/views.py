@@ -85,7 +85,5 @@ def trust_card(request):
                 card_uuid=response['response_body']['card_uuid']
             )
             card.save()
-            return redirect(reverse('cards'))
-        return redirect(reverse('cards'))
     return redirect(reverse('cards'))
 
