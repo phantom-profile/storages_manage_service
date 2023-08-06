@@ -19,7 +19,7 @@
         <th>{{storage.capacity}}</th>
         <th>{{storage.current_load}}</th>
         <th> {{storage.trucks_count}}</th>
-        <th><a href="#" onclick="show_weather('{{storage.location}}')">Get Weather</a></th>
+        <th><a href="{% url 'current-weather' %}?location={{storage.location}}">Get Weather</a></th>
       </tr>
     {% endfor %}
   </tbody>
