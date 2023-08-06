@@ -13,9 +13,13 @@ class ConvertorForm(forms.Form):
 
 
 class CreditCardForm(ModelForm):
+    def clean_owner(self):
+        return self.cleaned_data['owner'].upper()
+
     class Meta:
         model = CreditCard
         fields = ['card_number', 'cvv', 'owner', 'bank', 'vendor', 'expires_at']
         widgets = {
-            'expires_at': forms.DateTimeInput(attrs={'class': 'form-control', 'type': "datetime-local"}),
+            'expires_at': forms.DateTimeInput(attrs={'class': 'form-control',
+                                                     'type': "datetime-local"}),
         }
