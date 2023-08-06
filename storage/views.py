@@ -1,10 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect, reverse
-from django.http import HttpRequest, JsonResponse
+from django.http import HttpRequest
 
 from storage.models import Storage, Truck
 
-from lib.storages_services import GetStoragesService
-from lib.clients.weather_client import WeatherApiClient
+from lib.storages_services import GetStoragesService, GetWeatherService
 from lib.forms_factory import FormsFactory
 from lib.notificators import FlashNotifier
 
@@ -56,9 +55,9 @@ def create_storage(request: HttpRequest):
 
 
 def show_current_weather(request: HttpRequest):
-    location = request.GET.get("location")
-    if not location:
-        return JsonResponse({"error": "no location provided"}, 422)
+    GetWeatherService(
+        location=request.GET.get("location", ''),
+        notifier=FlashNotifier(request)
+    ).perform()
 
-    current_weather = WeatherApiClient(location).current()
-    return JsonResponse(current_weather['response_body'], status=current_weather['status'])
+    return redirect(reverse('all-storages'))
