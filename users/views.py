@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 
 from lib.users_services import CurrencyConverter, ConvertorError
 from lib.forms_factory import FormsFactory
 from users.models import CreditCard
+from lib.clients.payment_client import PayServiceClient
 
 
 @login_required
@@ -54,7 +55,33 @@ def convert_currencies(request):
 
 def index(request):
     all_cards = CreditCard.objects.all()
+    form = FormsFactory.produce('credit-card')
     context = {
-        'cards': all_cards
+        'cards': all_cards,
+        'form': form
     }
     return render(request, 'index.html', context)
+
+
+def trust_card(request):
+    form = FormsFactory.produce('credit-card', params=request.POST)
+    if form.is_valid():
+        response = PayServiceClient().trust_card(
+            card_number=form.cleaned_data.get("card_number"),
+            cvv=form.cleaned_data.get("cvv"),
+            owner=form.clean_owner(),
+            bank=form.cleaned_data.get("bank"),
+            vendor=form.cleaned_data.get("vendor")
+        )
+        if response["is_successful"]:
+            card = CreditCard(
+                card_number=form.cleaned_data.get("card_number"),
+                cvv=form.cleaned_data.get("cvv"),
+                owner=form.clean_owner(),
+                bank=form.cleaned_data.get("bank"),
+                vendor=form.cleaned_data.get("vendor"),
+                expires_at=form.cleaned_data.get("expires_at"),
+                card_uuid=response['response_body']['card_uuid']
+            )
+            card.save()
+    return redirect(reverse('cards'))
