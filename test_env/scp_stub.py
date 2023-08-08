@@ -11,7 +11,6 @@ dst = pathlib.Path(args[1].split(':')[1])
 
 dst.unlink(missing_ok=True)
 
-raise Exception('aaaa')
 with src.open('r') as f1:
     data = f1.read()
 
