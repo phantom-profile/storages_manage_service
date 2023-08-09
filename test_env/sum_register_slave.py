@@ -1,5 +1,6 @@
 import pathlib
 import sys
+import hashlib
 from typing import Any
 
 
@@ -23,11 +24,15 @@ class CheckSumRegister:
             file.write(f'\n{index} - ')
 
     def register_sum_to_journal(self):
+        if not self._target_file.exists():
+            return
+
         with self._journal_file.open('a') as file:
             file.write(self._calc_hash_sum())
 
     def _calc_hash_sum(self):
-        return self._target_file.name
+        with self._target_file.open('rb') as file:
+            return hashlib.md5(file.read()).hexdigest()
 
     def _get_index(self):
         if not self._journal_file.exists():
