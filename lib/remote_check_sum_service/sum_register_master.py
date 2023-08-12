@@ -1,7 +1,7 @@
 import json
 import subprocess
 import pathlib
-
+import sys
 
 FILENAME = pathlib.Path(__file__).name
 CONFIG_FILE = pathlib.Path(__file__).parent / 'config.json'
@@ -57,7 +57,7 @@ class DataTransitionClient:
 
         pass_file = self.opts['password_file']
         with open(pass_file) as file:
-            self.password = (file.read().strip()).encode('utf-8')
+            self.password = (file.read().strip())
             return self.password
 
     def transfer_file_to_remote(self):
@@ -73,34 +73,32 @@ class DataTransitionClient:
 
     def trigger_slave(self, command):
         jrnl_location = self.opts["md5_journal_location"]
-        print(self.get_password())
         target_location = self.opts['target_location']
-        slave_exec = f'"python3 sum_register_slave.py {command} {jrnl_location} {target_location}"'
+        slave_exec = f'python3 sum_register_slave.py {command} {jrnl_location} {target_location}'
         proc = subprocess.Popen(
             [*self.opts['ssh_call'], self.opts['target_host'], slave_exec],
             stdin=subprocess.PIPE
         )
-        proc.stdin.writelines()
-        proc.communicate()
+
         if self.opts['use_password']:
             self.input_password(proc)
 
         proc.wait()
 
     def input_password(self, proc):
-        proc.stdin.writelines([self.get_password(), b'aaaa'])
         proc.stdin.flush()
         proc.stdin.write(self.get_password())
-        proc.stdin.flush()
 
 
 def main():
     opts = ConfigParser(CONFIG_FILE).parse()
     client = DataTransitionClient(opts)
+    times = int(sys.argv[1])
 
-    client.trigger_slave('new_line')
-    client.transfer_file_to_remote()
-    client.trigger_slave('check_sum')
+    for i in range(times):
+        client.trigger_slave('new_line')
+        client.transfer_file_to_remote()
+        client.trigger_slave('check_sum')
 
 
 if __name__ == '__main__':
