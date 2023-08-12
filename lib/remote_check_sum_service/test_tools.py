@@ -13,7 +13,6 @@ class CmdlineStub:
         # for emulating access via password input
         self.with_pass = with_pass
         self.cmd_args = args
-        print(self.cmd_args)
 
     def launch(self):
         return self.tools[self.tool_name]()
@@ -40,8 +39,8 @@ class CmdlineStub:
         if self.with_pass:
             input('input password: ')
 
-        src = pathlib.Path(args[0])
-        dst = pathlib.Path(args[1].split(':')[1])
+        src = pathlib.Path(self.cmd_args[0])
+        dst = pathlib.Path(self.cmd_args[1].split(':')[1])
         dst.unlink(missing_ok=True)
 
         with src.open('r') as f1:
@@ -56,7 +55,8 @@ class CmdlineStub:
 def main():
     cmd = sys.argv[1]
     args = sys.argv[2:]
-    CmdlineStub(tool_name=cmd, args=args)
+    print(sys.argv[1:])
+    CmdlineStub(tool_name=cmd, args=args).launch()
 
 
 if __name__ == '__main__':
