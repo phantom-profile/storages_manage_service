@@ -9,7 +9,7 @@ CONFIG_FILE = pathlib.Path(__file__).parent / 'config.json'
 
 class ConfigParser:
     NO_FILE_ERROR = 'Add file config.json to same dir where this script located'
-    WRONG_CONFIG_ERROR = f'No copied or target or password pathes provided to config.json file'
+    WRONG_CONFIG_ERROR = 'No copied or target or password pathes provided to config.json file'
 
     class ConfigError(Exception):
         ...
