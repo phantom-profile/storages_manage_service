@@ -1,6 +1,8 @@
 import pathlib
 import sys
 import hashlib
+import datetime
+
 from typing import Any
 
 
@@ -28,7 +30,7 @@ class CheckSumRegister:
             return
 
         with self._journal_file.open('a') as file:
-            file.write(self._calc_hash_sum())
+            file.write(f"{datetime.datetime.now()} - {self._calc_hash_sum()}")
 
     def _calc_hash_sum(self):
         with self._target_file.open('rb') as file:
