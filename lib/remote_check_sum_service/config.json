@@ -1,12 +1,12 @@
 {
-  "testing": true,
+  "testing": false,
   "prod_cfg": {
-    "password_file": "",
-    "copied_file": "",
-    "target_host": "",
-    "target_location": "",
-    "md5_journal_location": "",
-    "use_password": true,
+    "password_file": "pass.txt",
+    "copied_file": "1.txt",
+    "target_host": "USER@HOST",
+    "target_location": "2.txt",
+    "md5_journal_location": "jrnl.txt",
+    "use_password": false,
     "loop_trigger": false,
     "rsync_call": ["rsync", "-r", "--delete-before"],
     "ssh_call": ["ssh"]
