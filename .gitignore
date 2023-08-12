@@ -5,4 +5,4 @@
 *.sqlite3*
 venv
 log
-lib/remote_check_sum_service/*.txt
+lib/remote_check_sum_service/test_files/*.txt
