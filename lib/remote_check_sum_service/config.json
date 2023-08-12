@@ -1,0 +1,25 @@
+{
+  "testing": true,
+  "prod_cfg": {
+    "password_file": "",
+    "copied_file": "",
+    "target_host": "",
+    "target_location": "",
+    "md5_journal_location": "",
+    "use_password": false,
+    "loop_trigger": false,
+    "rsync_call": ["rsync", "-r", "--delete-before"],
+    "ssh_call": ["ssh"]
+  },
+  "test_cfg": {
+    "password_file": "test_files/pass.txt",
+    "copied_file": "test_files/1.txt",
+    "target_host": "USER@HOST",
+    "target_location": "test_files/2.txt",
+    "md5_journal_location": "test_files/jrnl.txt",
+    "use_password": false,
+    "loop_trigger": false,
+    "rsync_call": ["python3", "test_tools.py", "scp"],
+    "ssh_call": ["python3", "test_tools.py", "ssh"]
+  }
+}
